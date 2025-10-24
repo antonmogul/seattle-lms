@@ -1,0 +1,194 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider      = "prisma-client-js"
+    output        = "../generated"
+    binaryTargets = ["native", "darwin", "linux-arm64-openssl-1.0.x", "debian-openssl-3.0.x"]
+}
+
+generator typegraphql {
+    provider           = "typegraphql-prisma"
+    output             = "../generated/type-graphql"
+    emitTranspiledCode = true
+}
+
+model user {
+    id                  String             @id @default(auto()) @map("_id") @db.ObjectId
+    firstName           String
+    lastName            String
+    email               String
+    avatar              String
+    enabled             Boolean            @default(true)
+    password            String?            @default("")
+    tokenVersion        Int                @default(0)
+    createdAt           DateTime           @default(now())
+    updatedAt           DateTime           @default(now())
+    lastLoginAt         DateTime           @default(now())
+    isGoogleLogin       Boolean            @default(false)
+    numberOfOTPSent     Int                @default(0)
+    expertBadgeUnlocked Boolean            @default(false)
+    company             String?
+    jobTitle            String?
+    country             String?
+    newsletterOptIn     Boolean            @default(false)
+    courseProgress      courseProgress[]
+    lessonProgress      lessonProgress[]
+}
+
+model OTP {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId     String?  @db.ObjectId
+    adminId    String?  @db.ObjectId
+    type       OTPType
+    otp        String
+    isUsed     Boolean  @default(false)
+    created_at DateTime @default(now())
+}
+
+enum OTPType {
+    SIGNUP
+    LOGIN
+    RESET_PASSWORD
+    ADMIN_LOGIN
+    ADMIN_RESET_PASSWORD
+}
+
+model admin {
+    id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+    firstName           String
+    lastName            String
+    email               String
+    password            String
+    avatar              String
+    tokenVersion        Int      @default(0)
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @default(now())
+    enabled             Boolean  @default(true)
+    numberOfOTPSent     Int      @default(0)
+}
+
+model courseProgress {
+    id              String              @id @default(auto()) @map("_id") @db.ObjectId
+    courseWId       String              @unique
+    user            user                @relation(fields: [userId], references: [id])
+    userId          String              @db.ObjectId
+    course          course              @relation(fields: [courseId], references: [id])
+    courseId        String              @db.ObjectId
+    status          courseStatus        @default(NOT_STARTED)
+    lessonProgress  lessonProgress[]
+    createdAt       DateTime?           @default(now())
+    updatedAt       DateTime?           @default(now())
+    completedAt     DateTime?           @default(now())
+}
+
+enum courseStatus {
+    NOT_STARTED
+    IN_PROGRESS
+    COMPLETE
+}
+
+model lessonProgress {
+    id                  String         @id @default(auto()) @map("_id") @db.ObjectId
+    lessonWId           String         @unique
+    lesson              lesson         @relation(fields: [lessonId], references: [id])
+    lessonId            String         @db.ObjectId
+    user                user           @relation(fields: [userId], references: [id])
+    userId              String         @db.ObjectId
+    courseProgressId    String         @db.ObjectId
+    courseProgress      courseProgress @relation(fields: [courseProgressId], references: [id])
+    status              lessonStatus   @default(NOT_STARTED)
+    createdAt           DateTime?      @default(now())
+    updatedAt           DateTime?      @default(now())
+    completedAt         DateTime?      @default(now())
+}
+
+enum lessonStatus {
+    NOT_STARTED
+    IN_PROGRESS
+    COMPLETE
+}
+
+model region {
+    id          String          @id @default(auto()) @map("_id") @db.ObjectId
+    wid         String?
+    name        String
+    slug        String?
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @default(now())
+}
+
+model country {
+    id          String          @id @default(auto()) @map("_id") @db.ObjectId
+    wid         String?
+    name        String
+    slug        String?
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @default(now())
+}
+
+model state {
+    id          String          @id @default(auto()) @map("_id") @db.ObjectId
+    wid         String?
+    name        String
+    slug        String?
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @default(now())
+}
+
+model city {
+    id          String          @id @default(auto()) @map("_id") @db.ObjectId
+    wid         String?
+    name        String
+    slug        String?
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @default(now())
+}
+
+model course {
+    id              String          @id @default(auto()) @map("_id") @db.ObjectId
+    wid             String
+    name            String
+    slug            String
+    comingSoon      Boolean         @default(false)
+    lessonCount     Int             @default(0)
+    createdAt       DateTime        @default(now())
+    updatedAt       DateTime        @default(now())
+    readTime        Int?            @default(0)
+    lessons         lesson[]
+    courseProgress  courseProgress[]
+}
+
+model lesson {
+    id              String          @id @default(auto()) @map("_id") @db.ObjectId
+    wid             String
+    name            String
+    slug            String
+    tag             String          @default("")
+    lessonContent   String          @default("")
+    course          course          @relation(fields: [courseId], references: [id])
+    courseId        String          @db.ObjectId
+    createdAt       DateTime        @default(now())
+    updatedAt       DateTime        @default(now())
+    readTime        Int?            @default(0)
+    lessonProgress  lessonProgress[]
+}
+
+model GAConnection {
+    id            String                @id @default(auto()) @map("_id") @db.ObjectId
+    email         String                @default("")
+    access_token  String                @default("")
+    refresh_token String                @default("")
+    expiry_date   String                @default("")
+    created_at    DateTime              @default(now())
+    updated_at    DateTime              @default(now())
+    status        GAConnectionStatuses
+}
+
+enum GAConnectionStatuses {
+    CONNECTED
+    ERROR
+    DISCONNECTED
+}

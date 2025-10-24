@@ -1,0 +1,37 @@
+query getActiveUsers ($filter: String!) {
+    getActiveUsers (filter: $filter) {
+        graphData {
+            date
+            month
+            startDate
+            endDate
+            value
+        }
+        totalActiveUsers
+    }
+}
+
+query getNewSignups ($filter: String!) {
+    getNewSignups (filter: $filter) {
+        date
+        month
+        startDate
+        endDate
+        value
+    }
+}
+
+query getCoursesReportData ($courseId: String) {
+    getCoursesReportData(courseId: $courseId) {
+        coursesNotStarted
+        coursesNotCompleted
+        coursesCompleted
+    }
+}
+
+query getCourseCompletionReport {
+    getCourseCompletionReport {
+        courseTitle
+        completions
+    }
+}

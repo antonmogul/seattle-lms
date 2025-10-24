@@ -1,0 +1,31 @@
+{
+  "name": "seattle-lms",
+  "version": "1.0.0",
+  "repository": "https://github.com/workshore/seattle-lms.git",
+  "author": "Ritesh Tailor <ritesh.tailor@workshore.io>",
+  "license": "MIT",
+  "packageManager": "yarn@1.22.22",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "dotenv -- turbo run dev",
+    "client:dev": "dotenv -- yarn workspace client run dev",
+    "start": "dotenv -- yarn workspace server run start",
+    "build": "dotenv -- turbo run build",
+    "client:gen": "dotenv -- yarn workspace client run gen",
+    "db:gen": "dotenv -- yarn workspace orm run db:gen",
+    "db:pull": "dotenv -- yarn workspace orm run db:pull",
+    "db:push": "dotenv -- yarn workspace orm run db:push",
+    "db:show": "dotenv -- yarn workspace orm run db:show",
+    "server:start": "dotenv -- yarn workspace server run start"
+  },
+  "private": true,
+  "devDependencies": {
+    "buffer": "^5.5.0",
+    "dotenv-cli": "^7.2.1",
+    "process": "^0.11.10",
+    "turbo": "^2.5.6"
+  }
+}

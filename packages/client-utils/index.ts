@@ -1,0 +1,1 @@
+export { skeletonLoader } from "./skeletonLoader";

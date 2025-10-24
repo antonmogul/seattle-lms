@@ -1,0 +1,13 @@
+query getSearchResults ($pageNo: Float!, $searchTerm: String!) {
+    getSearchResults (pageNo: $pageNo, searchTerm: $searchTerm) {
+        data {
+            name
+            description
+            collection
+            link
+            image
+        }
+        totalRecords
+        pageNo
+    }
+}

@@ -1,0 +1,101 @@
+mutation publicLogin($email: String!, $password: String!) {
+  publicLogin(email: $email, password: $password){
+    id,
+    token,
+    firstName,
+    lastName,
+    message
+  }
+}
+
+mutation publicSSOLogin($email: String!) {
+  publicSSOLogin(email: $email){
+    id,
+    token,
+    firstName,
+    lastName,
+    message
+  }
+}
+
+mutation publicForgotPassword($email: String!) {
+    publicForgotPassword(email: $email) {
+      id,
+      token,
+      firstName,
+      lastName,
+      message
+    }
+}
+
+mutation publicResetPassword($newPassword: String!, $token: String!) {
+  publicResetPassword(newPassword: $newPassword, token: $token )
+}
+
+mutation publicSignup($firstName:String!, $lastName: String!, $email:String!, $password: String!, $company: String, $jobTitle: String, $country: String, $newsletterOptIn: Boolean) {
+  publicSignup(firstName:$firstName, lastName: $lastName, email:$email, password: $password, company: $company, jobTitle: $jobTitle, country: $country, newsletterOptIn: $newsletterOptIn) {
+    id,
+    token,
+    firstName,
+    lastName,
+    message
+  }
+}
+
+mutation publicResendOTP($email: String!, $OTPType: String!) {
+  publicResendOTP(email: $email, OTPType: $OTPType) {
+    id,
+    token,
+    firstName,
+    lastName,
+    message
+  }
+}
+
+mutation verifySignupOTP($email: String!, $otp: String!, $rememberMe: Boolean!) {
+  verifySignupOTP(email: $email, otp: $otp, rememberMe: $rememberMe) {
+    id,
+    token,
+    firstName,
+    lastName,
+    message
+  }
+}
+
+mutation verifyLoginOTP($email: String!, $otp: String!, $rememberMe: Boolean!) {
+  verifyLoginOTP(email: $email, otp: $otp, rememberMe: $rememberMe) {
+    id,
+    token,
+    firstName,
+    lastName,
+    message
+  }
+}
+
+mutation verifyResetPasswordOTP($email: String!, $otp: String!) {
+  publicVerifyResetPasswordOTP(email: $email, otp: $otp)
+}
+
+query userMe {
+    userMe {
+        firstName
+        lastName
+        email
+        avatar
+        enabled
+        isGoogleLogin
+        expertBadgeUnlocked
+        company
+        jobTitle
+        country
+        newsletterOptIn
+    }
+}
+
+mutation publicUploadAvatar($imageFile: Upload!) {
+  publicUploadAvatar(file: $imageFile)
+}
+
+mutation setExpertBadgeUnlocked {
+  setExpertBadgeUnlocked
+}

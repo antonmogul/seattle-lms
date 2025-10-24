@@ -1,0 +1,34 @@
+{
+  "name": "orm",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "db:gen": "prisma generate && yarn build",
+    "db:pull": "prisma db pull  && yarn build",
+    "db:push": "prisma db push && yarn build",
+    "db:show": "prisma studio",
+    "copy:files": "rm -rf ./dist/generated 2>/dev/null || true && mkdir -p ./dist && cp -R ./generated ./dist",
+    "build": "tsc && yarn copy:files"
+  },
+  "devDependencies": {
+    "@types/graphql-fields": "^1.3.5",
+    "prisma": "~4.11.0",
+    "typegraphql-prisma": "0.24.4",
+    "typescript": "^5.0.3",
+    "@types/node": "20.1.1",
+    "@types/minimatch": "^5.1.2"
+  },
+  "dependencies": {
+    "@prisma/client": "~4.11.0",
+    "graphql-fields": "^2.0.3",
+    "graphql-scalars": "^1.21.3",
+    "graphql": "^15.3.0",
+    "type-graphql": "^1.1.1",
+    "tslib": "^2.5.0",
+    "class-validator": "^0.14.0",
+    "tsconfig": "*"
+  }
+}

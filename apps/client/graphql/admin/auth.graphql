@@ -1,0 +1,68 @@
+mutation adminLogin($email: String!, $password: String!) {
+    adminLogin(email: $email, password: $password) {
+        id,
+        token,
+        firstName,
+        lastName,
+        message
+    }
+}
+
+mutation adminResendLoginOTP($email: String!, $OTPType: String!) {
+    adminResendOTP(email: $email, OTPType: $OTPType) {
+        id,
+        token,
+        firstName,
+        lastName,
+        message
+    }
+}
+
+mutation adminVerifyLoginOTP($rememberMe: Boolean!, $otp: String!, $email: String!) {
+    adminVerifyLoginOTP(rememberMe: $rememberMe, otp: $otp, email: $email) {
+        id,
+        token,
+        firstName,
+        lastName,
+        message
+    }
+}
+
+mutation adminForgotPassword($email: String!) {
+    adminForgotPassword(email: $email) {
+        id,
+        token,
+        firstName,
+        lastName,
+        message
+    }
+}
+
+mutation adminResetPassword($newPassword: String!, $token: String!) {
+    adminResetPassword(newPassword: $newPassword, token: $token )
+}
+
+mutation adminVerifyResetPasswordOTP($email: String!, $otp: String!) {
+    adminVerifyResetPasswordOTP(email: $email, otp: $otp)
+}
+
+query adminMe {
+    adminMe {
+        firstName
+        lastName
+        email
+        avatar
+    }
+}
+
+mutation adminUploadAvatar($imageFile: Upload!) {
+    adminUploadAvatar(file: $imageFile)
+}
+
+mutation adminChangePassword ($newPassword: String!, $oldPassword: String!) {
+    adminChangePassword(newPassword: $newPassword, oldPassword: $oldPassword) {
+        token,
+        firstName,
+        lastName
+    }
+}

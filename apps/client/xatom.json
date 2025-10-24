@@ -1,0 +1,8 @@
+{
+  "webflowSubdomain": "seattle-lms",
+  "port": 3021,
+  "source": "./src/index.ts",
+  "dist": "./dist",
+  "scriptList": ["index.js"],
+  "scriptAttribute": "replace-it"
+}

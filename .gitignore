@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+yarn.lock
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.turbo/
+
+# Environment variables
+.env
+.env.local
+.env.production
+seattle.env
+
+# Generated Prisma files
+packages/orm/generated/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Parcel cache
+.parcel-cache/
+
+# Test/CI
+coverage/
+.playwright-mcp/

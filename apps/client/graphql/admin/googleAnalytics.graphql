@@ -1,0 +1,184 @@
+query getAuthURL {
+    getGoogleAuthURL
+}
+
+query getGAConnectionStatus {
+    getGAConnectionStatus {
+        id
+        email
+        created_at
+        updated_at
+        status
+    }
+}
+
+mutation unlinkGAConnection {
+    unlinkGAConnection
+}
+
+query getGAReport ($dateRanges: [String!]!) {
+    getGAReport(dateRanges: $dateRanges) {
+        rowCount
+        kind
+        metadata {
+            currencyCode
+            timeZone
+        }
+        totals {
+            dimensionValues {
+                value
+            }
+            metricValues {
+                value
+            }
+        }
+        rows {
+            dimensionValues {
+                value
+            }
+            metricValues {
+                value
+            }
+        }
+        metricHeaders {
+            name
+            type
+        }
+        dimensionHeaders {
+            name
+            type
+        }
+    }
+    getGAByCountryReport(dateRanges: $dateRanges) {
+        rowCount
+        kind
+        metadata {
+            currencyCode
+            timeZone
+        }
+        totals {
+            dimensionValues {
+                value
+            }
+            metricValues {
+                value
+            }
+        }
+        rows {
+            dimensionValues {
+                value
+            }
+            metricValues {
+                value
+            }
+        }
+        metricHeaders {
+            name
+            type
+        }
+        dimensionHeaders {
+            name
+            type
+        }
+    }
+    R1: getGARunTimeReport(minuteRanges: ["0-5","6-10"]) {
+        rowCount
+        kind
+        rows {
+        dimensionValues {
+            value
+        }
+        metricValues {
+            value
+        }
+        }
+        metricHeaders {
+            name
+            type
+        }
+        dimensionHeaders {
+            name
+            type
+        }
+    }
+    R2: getGARunTimeReport(minuteRanges: ["11-15","16-20"]) {
+        rowCount
+        kind
+        rows {
+        dimensionValues {
+            value
+        }
+        metricValues {
+            value
+        }
+        }
+        metricHeaders {
+            name
+            type
+        }
+        dimensionHeaders {
+            name
+            type
+        }
+    }
+    R3: getGARunTimeReport(minuteRanges: ["21-25","26-29"]) {
+        rowCount
+        kind
+        rows {
+        dimensionValues {
+            value
+        }
+        metricValues {
+            value
+        }
+        }
+        metricHeaders {
+            name
+            type
+        }
+        dimensionHeaders {
+            name
+            type
+        }
+    }
+    getGAPageViewsReport(dateRanges: $dateRanges) {
+        rowCount
+        kind
+        rows {
+        dimensionValues {
+            value
+        }
+        metricValues {
+            value
+        }
+        }
+        metricHeaders {
+        name
+        type
+        }
+        dimensionHeaders {
+        name
+        type
+        }
+    }
+    getGAEventsReport(dateRanges: $dateRanges) {
+        rowCount
+        kind
+        rows {
+        dimensionValues {
+            value
+        }
+        metricValues {
+            value
+        }
+        }
+        metricHeaders {
+        name
+        type
+        }
+        dimensionHeaders {
+        name
+        type
+        }
+    }
+}

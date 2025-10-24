@@ -1,0 +1,31 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "seattle-lms-client",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "xatom dev",
+    "dev": "xatom dev",
+    "build": "xatom build",
+    "gen": "graphql-codegen --config app-codegen.yml"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.2.0",
+    "@graphql-codegen/typed-document-node": "^2.2.2",
+    "@graphql-codegen/typescript": "^2.2.2",
+    "@graphql-codegen/typescript-operations": "^2.1.4",
+    "@types/apollo-upload-client": "^17.0.2",
+    "@xatom/build-tool": "^1.0.1"
+  },
+  "dependencies": {
+    "@xatom/apollo-graphql": "^1.0.5",
+    "@xatom/build-tool": "^1.0.1",
+    "@xatom/core": "^1.0.12",
+    "@xatom/slider": "^1.0.0",
+    "dayjs": "^1.11.10",
+    "graphql": "^15.3.0",
+    "htmx.org": "^1.9.10",
+    "swiper": "^11.2.1"
+  }
+}

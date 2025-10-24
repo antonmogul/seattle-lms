@@ -1,0 +1,10 @@
+{
+  "extends": "tsconfig/tsconfig.server.json",
+  "exclude": ["dist", "generated"],
+
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist" /* Redirect output structure to the directory. */,
+    "rootDir": "./" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+  }
+}

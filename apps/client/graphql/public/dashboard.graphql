@@ -1,0 +1,7 @@
+mutation publicChangePassword ($newPassword: String!, $oldPassword: String!) {
+    publicChangePassword (newPassword: $newPassword, oldPassword: $oldPassword) {
+        token,
+        firstName,
+        lastName
+    }
+}

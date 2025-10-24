@@ -1,0 +1,173 @@
+query adminGetAllUsers(
+    $status: Boolean
+    $joiningEndDate: String!
+    $joiningStartDate: String!
+    $lastLoginEndDate: String!
+    $lastLoginStartDate: String!
+    $searchTerm: String!
+    $noOfRecords: Float!
+    $pageNo: Float!
+) {
+    adminGetAllUsers(
+        status: $status
+        joiningEndDate: $joiningEndDate
+        joiningStartDate: $joiningStartDate
+        lastLoginEndDate: $lastLoginEndDate
+        lastLoginStartDate: $lastLoginStartDate
+        searchTerm: $searchTerm
+        noOfRecords: $noOfRecords
+        pageNo: $pageNo
+    ) {
+            data {
+            id
+            firstName
+            lastName
+            email
+            avatar
+            enabled
+            password
+            tokenVersion
+            createdAt
+            updatedAt
+            lastLoginAt
+            }
+            totalRecords
+
+    }
+}
+
+query adminGetUser(
+    $userId: String!
+) {
+    adminGetUser(
+        userId: $userId
+    ) {
+        user {
+            id
+            firstName
+            lastName
+            email
+            avatar
+            enabled
+            password
+            tokenVersion
+            createdAt
+            updatedAt
+            lastLoginAt
+            courseProgress {
+                id
+                courseId
+                status
+                updatedAt
+            }
+        }
+    }
+}
+
+mutation adminUpdateUserStatus(
+    $status: Boolean!
+    $userId: String!
+) {
+    adminUpdateUserStatus(
+        status: $status
+        userId: $userId
+    ) {
+        id
+        firstName
+        lastName
+        email
+        avatar
+        enabled
+        password
+        tokenVersion
+        createdAt
+        updatedAt
+        lastLoginAt
+    }
+}
+
+
+query adminGetUserProgress ($courseStatus: String, $userId: String!) {
+    adminGetUserProgress (courseStatus: $courseStatus, userId: $userId) {
+        id
+        firstName
+        lastName
+        email
+        avatar
+        enabled
+        password
+        tokenVersion
+        createdAt
+        updatedAt
+        lastLoginAt
+        _count {
+            lessonProgress
+        }
+        courseProgress {
+            id
+            courseWId
+            userId
+            courseId
+            status
+            updatedAt
+            _count{
+                lessonProgress
+            }
+            course {
+                id
+                wid
+                name
+                slug
+                comingSoon
+                lessonCount
+                createdAt
+                updatedAt
+                _count {
+                    lessons
+                    courseProgress
+                }
+            }
+            lessonProgress {
+                id
+                lessonWId
+                lessonId
+                userId
+                courseProgressId
+                status
+                updatedAt
+                lesson {
+                    id
+                    wid
+                    name
+                    slug
+                    tag
+                    lessonContent
+                    courseId
+                    createdAt
+                    updatedAt
+                    _count {
+                        lessonProgress
+                    }
+                }
+            }
+        }
+    }
+}
+
+query adminExportUsersCSV(
+    $status: Boolean
+    $joiningEndDate: String
+    $joiningStartDate: String
+    $lastLoginEndDate: String
+    $lastLoginStartDate: String
+    $searchTerm: String
+) {
+    adminExportUsersCSV(
+        status: $status
+        joiningEndDate: $joiningEndDate
+        joiningStartDate: $joiningStartDate
+        lastLoginEndDate: $lastLoginEndDate
+        lastLoginStartDate: $lastLoginStartDate
+        searchTerm: $searchTerm
+    )
+}

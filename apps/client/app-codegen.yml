@@ -1,0 +1,14 @@
+overwrite: true
+schema: 
+ - "http://localhost:4042/api/graphql"
+ - scalar Upload
+documents: "./graphql/**/*.graphql"
+generates:
+  src/graphql/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typed-document-node"
+    config:
+      scalars:
+        Upload: File

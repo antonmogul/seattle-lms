@@ -1,0 +1,33 @@
+name: GitHub Deployment
+run-name: ${{ github.actor }} is deploying app 🚀
+on: 
+  push:
+    branches:
+      - dev
+jobs:
+  run_example_job:
+    if: contains(github.event.head_commit.message , 'deployment-build')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: SSH Deployment Job
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        command_timeout: 1m
+        script: | 
+          PATH=$PATH:/home/${{ secrets.USERNAME }}/.nvm/versions/node/v20.11.1/bin
+          cd apps/${{github.event.repository.name}}
+          git pull
+          yarn install
+          pm2 restart ${{ secrets.PM2_PROCESS_ID }}
+    - name: Slack Notification
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: pullreminders/slack-action@master
+      with:
+        args: '{\"channel\":\"${{ secrets.SLACK_CHANNEL_ID }}\",\"blocks\":[{\"type\": \"header\",\"text\":{\"type\": \"plain_text\",\"text\": \":rocket: Successful deployment (Staging Environment): ${{ github.event.repository.name }} :rocket:\",\"emoji\": true}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Commit:* ${{ github.event.head_commit.message }}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Contributor :* ${{ github.event.head_commit.author.name }}<${{ github.event.head_commit.author.email }}>\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"<${{ github.event.head_commit.url }}|View Commit>\"}}]}'
+      if: success()

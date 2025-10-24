@@ -1,0 +1,158 @@
+query adminGetAllCourses (
+        $courseCompleteEndDate: String
+        $courseCompleteStartDate: String
+        $courseStartEndDate: String
+        $courseStartStartDate: String
+        $searchTerm: String,
+        $sortFilter: String
+        ){
+    adminGetAllCourses(
+        courseCompleteEndDate: $courseCompleteEndDate
+        courseCompleteStartDate: $courseCompleteStartDate
+        courseStartEndDate: $courseStartEndDate
+        courseStartStartDate: $courseStartStartDate
+        searchTerm: $searchTerm,
+        sortFilter: $sortFilter
+    ) {
+        id
+        wid
+        name
+        slug
+        comingSoon
+        lessonCount
+        createdAt
+        updatedAt
+        lessons {
+            id
+            wid
+            name
+            slug
+            tag
+            lessonContent
+            courseId
+            createdAt
+            updatedAt
+        }
+        courseProgress {
+            id
+            courseWId
+            userId
+            courseId
+            status
+            createdAt
+            updatedAt
+            completedAt
+            _count {
+                lessonProgress
+            }
+        }
+    }
+}
+
+query adminGetCourse ($courseId: String!){
+    adminGetCourse(courseId: $courseId) {
+        id
+        wid
+        name
+        slug
+        comingSoon
+        lessonCount
+        createdAt
+        updatedAt
+        lessons {
+            id
+            wid
+            name
+            slug
+            lessonContent
+            courseId
+            createdAt
+            updatedAt
+        }
+    }
+}
+
+
+query adminGetCourseUserDetails (
+$joiningEndDate: String,
+$joiningStartDate: String,
+$lastLoginEndDate: String,
+$lastLoginStartDate: String,
+$userStatus: Boolean,
+$courseStatus: String,
+$courseId: String!,
+$pageNo: Float!,
+$searchTerm: String
+$noOfRecords: Float!
+) {
+    adminGetCourseUserDetails (
+        joiningEndDate: $joiningEndDate,
+        joiningStartDate: $joiningStartDate,
+        lastLoginEndDate: $lastLoginEndDate,
+        lastLoginStartDate: $lastLoginStartDate,
+        userStatus: $userStatus,
+        courseStatus: $courseStatus,
+        courseId: $courseId,
+        pageNo: $pageNo,
+        searchTerm: $searchTerm,
+        noOfRecords: $noOfRecords
+    ) {
+        data {
+            id
+            wid
+            name
+            slug
+            comingSoon
+            lessonCount
+            createdAt
+            updatedAt
+            courseProgress {
+                id
+                courseWId
+                userId
+                courseId
+                status
+                updatedAt
+                user {
+                    id
+                    firstName
+                    lastName
+                    email
+                    avatar
+                    enabled
+                    password
+                    tokenVersion
+                    createdAt
+                    updatedAt
+                    lastLoginAt
+                }
+            }
+        }
+        pageNo
+        totalRecords
+    }
+}
+
+query adminUserActivityCourseDetails(
+    $courseCompleteEndDate: String
+    $courseCompleteStartDate: String
+    $courseStartEndDate: String
+    $courseStartStartDate: String
+    $courseId: String!
+) {
+    adminUserActivityCourseDetails(
+        courseCompleteEndDate: $courseCompleteEndDate
+        courseCompleteStartDate: $courseCompleteStartDate
+        courseStartEndDate: $courseStartEndDate
+        courseStartStartDate: $courseStartStartDate
+        courseId: $courseId
+    ) {
+        startedCourses
+        completedCourses
+    }
+}
+
+
+mutation adminManualSyncTrigger {
+    adminManualSyncTrigger
+}

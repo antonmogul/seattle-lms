@@ -1,0 +1,112 @@
+query getAllCoursesProgress {
+    getAllCoursesProgress {
+        id
+        courseId
+        userId
+        status
+        updatedAt
+        lessonProgress {
+            id
+            lessonId
+            userId
+            courseProgressId
+            status
+            updatedAt
+        }
+        course {
+            wid
+            slug
+            readTime
+        }
+    }
+}
+
+query getAllLessonsProgress($courseId: String!) {
+    getAllLessonsProgress(courseId: $courseId) {
+        id
+        lessonId
+        userId
+        courseProgressId
+        status
+        courseProgress {
+            id
+            courseId
+            userId
+            status
+        }
+        lesson {
+            readTime
+        }
+    }
+}
+
+query getCourseProgressByCourseId($courseId: String!) {
+    getCourseProgressByCourseId(courseId: $courseId) {
+        id
+        userId
+        courseId
+        status
+        updatedAt
+        lessonProgress {
+            id
+            lessonId
+            userId
+            courseProgressId
+            status
+            updatedAt
+            lesson {
+                slug
+                readTime
+            }
+        }
+        course {
+            readTime
+        }
+    }
+}
+
+query getLessonProgressById ($lessonId: String!, $courseId: String!){
+    getLessonProgressById(lessonId: $lessonId, courseId: $courseId) {
+        id
+        lessonId
+        userId
+        courseProgressId
+        status
+        updatedAt
+        courseProgress {
+            id
+            courseId
+            userId
+            status
+            updatedAt
+        }
+        lesson {
+            slug
+        }
+    }
+}
+
+mutation startLesson ($courseId: String!, $lessonId: String!){
+    startLesson(courseId: $courseId, lessonId: $lessonId)
+}
+
+mutation updateLessonStatus ($courseId: String!, $lessonId: String!, $status: String!, $isLastLesson: Boolean!){
+    updateLessonStatus(
+        isLastLesson: $isLastLesson,
+        status: $status,
+        courseId: $courseId,
+        lessonId: $lessonId
+    )
+}
+
+mutation updateReadTime ($courseId: String!, $lessonId: String!, $readTime: Float!) {
+    updateReadTime(
+        courseId: $courseId,
+        lessonId: $lessonId,
+        readTime: $readTime
+    )
+}
+
+query checkAllCoursesCompleted {
+    checkAllCoursesCompleted
+}
